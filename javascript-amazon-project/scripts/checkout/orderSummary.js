@@ -6,16 +6,16 @@ import { hello } from 'https://unpkg.com/supersimpledev@1.0.1/hello.esm.js';
 // a default export, used when you only want to export one thing from a file. doesn't use {}. libraries which use {}are 'named' exports
 import  dayjs  from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { deliveryOptions, getDeliveryOption } from '../../data/deliveryOptions.js';
+import { renderPaymentSummary } from './paymentSummary.js';
 
-
+/*
 hello();
-
 
 const today = dayjs();
 const deliveryDate = today.add(7, 'days'); // add 7 days to current date
 
 console.log(deliveryDate.format('dddd, MMMM D'));
-
+*/
 
 // MVC: Model-View-Controller design pattern
 // where you update the data, regenerate all the HTML
@@ -145,7 +145,7 @@ export function renderOrderSummary() {
 
   updateCheckoutHeader();
 
-
+  // event listener for delete button
   document.querySelectorAll('.js-delete-link')
     .forEach((link) => {
       link.addEventListener('click', () => {
@@ -157,6 +157,7 @@ export function renderOrderSummary() {
 
         container.remove();
         updateCheckoutHeader();
+        renderPaymentSummary();
       });
 
   });
@@ -169,6 +170,7 @@ export function renderOrderSummary() {
         updateDeliveryOption(productId, deliveryOptionId);
         
         renderOrderSummary(); // take the updated data and use recursion to re-run the code
+        renderPaymentSummary();
       });
   });
 }
