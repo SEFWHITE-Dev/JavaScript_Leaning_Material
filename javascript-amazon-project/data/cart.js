@@ -1,5 +1,5 @@
 // export lets the var be accessed outside this script, with 'module'
-export const cart = [
+export let cart = [
   {
     productId: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
     quantity: 2,
@@ -28,4 +28,19 @@ export function addToCart(selectedProductId) {
       quantity: 1
     });
   }
+}
+
+export function removeFromCart(selectedProductId) {
+  // 1.create new array
+  // 2.loop through the cart
+  // 3.add each product to new array, except for this productID
+  const newCart = [];
+
+  cart.forEach((cartItem) => {
+    if (cartItem.productId !== selectedProductId) {
+      newCart.push(cartItem);
+    }
+  });
+
+  cart = newCart;
 }
