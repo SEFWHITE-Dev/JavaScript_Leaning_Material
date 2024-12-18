@@ -45,6 +45,7 @@ const products =[
 //import { cart as myCart } from '../data/cart.js'; // it is possible to rename the imported variable name; 
 import { cart, addToCart } from '../data/cart.js';
 import { products } from '../data/products.js';
+import { formatCurrency } from './utils/money.js';
 
 /* another syntax for import: import * as...
  this imports everything from a file and groups it inside the declared object
@@ -83,7 +84,7 @@ products.forEach((product) => {
           </div>
 
           <div class="product-price">
-            ${(product.priceCents / 100).toFixed(2)}
+            $${formatCurrency(product.priceCents)}
           </div>
 
           <div class="product-quantity-container">
