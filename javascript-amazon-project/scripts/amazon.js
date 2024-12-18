@@ -88,13 +88,46 @@ products.forEach((product) => {
             Added
           </div>
 
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary
+          js-add-to-cart-button"
+          data-product-id="${product.id}">
             Add to Cart
           </button>
         </div>
   `;
 });
+// a data attribute is just a HTML attribute. it allows you to attach any data to an element
+// they must start with 'data-'
+// then give it any name. e.g. data-product-name
+// the product's 'name' is attatched to the 'button' attribute it resides in
+// the kebab-case naming is automatically converted to camel-case when used in JS code
 
 //console.log(productsHTML);
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
+
+document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
+  button.addEventListener('click', () => {
+    // the dataset property gives us all of the 'data' attributes attatched to the element
+    const selectedProductId = button.dataset.productId; // product-name => productName the name is automatically converted
+
+    let matchingItem;
+
+    cart.forEach((item) => {
+      if (selectedProductId === item.productId) {
+        matchingItem = item;
+      }
+    });
+
+    if (matchingItem) {
+      matchingItem.quantity += 1;
+    }
+    else {
+      cart.push({
+        productName: selectedProductId,
+        quantity: 1
+      });
+    }
+    console.log(cart);
+  })
+});
