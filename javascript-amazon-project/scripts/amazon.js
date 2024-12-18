@@ -43,9 +43,17 @@ const products =[
 
 // import the 'cart' var from cart.js
 //import { cart as myCart } from '../data/cart.js'; // it is possible to rename the imported variable name; 
-import { cart } from '../data/cart.js';
-import {products} from '../data/products.js';
+import { cart, addToCart } from '../data/cart.js';
+import { products } from '../data/products.js';
 
+/* another syntax for import: import * as...
+ this imports everything from a file and groups it inside the declared object
+ we can access each member property or method
+
+import * as cartModule from '../data/cart.js';
+cartModule.cart;
+cartModule.addToCart('id');
+*/
 
 // there can only be one of every var name, 
 // so if another JS files uses the same var name it will cause naming conflicts
@@ -108,6 +116,7 @@ products.forEach((product) => {
         </div>
   `;
 });
+
 // a data attribute is just a HTML attribute. it allows you to attach any data to an element
 // they must start with 'data-'
 // then give it any name. e.g. data-product-name
@@ -118,36 +127,22 @@ products.forEach((product) => {
 
 document.querySelector('.js-products-grid').innerHTML = productsHTML;
 
+function updateCartQuantity() {
+  let cartQuantity = 0;
+
+  cart.forEach((cartItem) => {
+    cartQuantity += cartItem.quantity;
+  });
+
+  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+}
+
 document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
   button.addEventListener('click', () => {
     // the dataset property gives us all of the 'data' attributes attatched to the element
     const selectedProductId = button.dataset.productId; // product-name => productName the name is automatically converted
 
-    let matchingItem;
-
-    cart.forEach((item) => {
-      if (selectedProductId === item.productId) {
-        matchingItem = item;
-      }
-    });
-
-    if (matchingItem) {
-      matchingItem.quantity += 1;
-    }
-    else {
-      cart.push({
-        productId: selectedProductId,
-        quantity: 1
-      });
-    }
-
-    let cartQuantity = 0;
-
-    cart.forEach((item) => {
-      cartQuantity += item.quantity;
-    });
-
-    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
-
+    addToCart(selectedProductId);
+    updateCartQuantity();
   });
 });
