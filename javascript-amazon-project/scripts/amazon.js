@@ -40,6 +40,17 @@ const products =[
 ];
 */
 
+
+// import the 'cart' var from cart.js
+//import { cart as myCart } from '../data/cart.js'; // it is possible to rename the imported variable name; 
+import { cart } from '../data/cart.js';
+
+
+// there can only be one of every var name, 
+// so if another JS files uses the same var name it will cause naming conflicts
+//const cart = []; 
+
+
 let productsHTML = '';
 
 products.forEach((product) => {

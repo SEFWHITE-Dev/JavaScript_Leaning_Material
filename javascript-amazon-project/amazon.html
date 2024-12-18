@@ -55,8 +55,13 @@
       <div class="products-grid js-products-grid">
       </div>
     </div>
-    <script src="data/cart.js"></script>
     <script src="data/products.js"></script> <!--json data is loaded first-->
-    <script src="scripts/amazon.js"></script><!--generate HTML through JS-->
+    <script type="module" src="scripts/amazon.js"></script><!--generate HTML through JS-->
+    <!-- 
+     type="module" lets this file get variables out of other files.
+     if you use the <script> tag to gain access to variable names, it can cause naming conflicts down the line
+     in order to prevent this modules are used.
+     modules only work using live-server.
+    -->
   </body>
 </html>
