@@ -1,4 +1,4 @@
-import { formatCurrency } from '../scripts/utils/money.js'
+import { formatCurrency } from '../../scripts/utils/money.js'
 
 // describe(): Jasmine function to create a group of specs (test suite)
 describe('test suite: format currency', () => {
