@@ -7,8 +7,6 @@ import { loadFromStorage, cart } from "../../data/cart.js";
 // 2. how the page behaves
 
 
-
-
 describe('test suite: renderOrderSummary', () => {
 
   let localStorageMock;
