@@ -2,6 +2,8 @@ import { addToCart, cart, loadFromStorage } from "../../data/cart.js";
 
 // Test coverage: how much of the code is being testsed
 // the best practice of testing is to always test each condition of the test
+// Unit Test: testing one piece of the code
+// Integration test: testing a whole page; many units/pieces of code working together
 
 describe('test suite: add to cart', () => {
 
@@ -26,20 +28,29 @@ describe('test suite: add to cart', () => {
 
 
   it('adds an existing product to cart', () => {
-    localStorageMock.getItem.productId = JSON.stringify('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
-    localStorageMock.getItem.quantity = JSON.stringify(1);
-    localStorageMock.getItem.deliveryOptionId = JSON.stringify('1');
+
+    localStorageMock = {
+      getItem: jasmine.createSpy('getItem').and.callFake(() => JSON.stringify([{
+        productId: 'e43638ce-6aa0-4b85-b27f-e1d07eb678c6',
+        quantity: 1,
+        deliveryOptionId: '1',
+      }])),
+      setItem: jasmine.createSpy('setItem'),
+    };
+
+    // Replace the global localStorage with the mock
+    Object.defineProperty(window, 'localStorage', { value: localStorageMock });
 
     loadFromStorage();
-
+    console.log(localStorage.getItem('cart'));
     addToCart('e43638ce-6aa0-4b85-b27f-e1d07eb678c6'); 
     expect(cart.length).toEqual(1);
    
     // because you can't access a mocked localStorage, we can check if it was called
     expect(localStorage.setItem).toHaveBeenCalledTimes(1);
     expect(cart[0].productId).toEqual('e43638ce-6aa0-4b85-b27f-e1d07eb678c6');
-    expect(cart[0].quantity).toEqual(1);
-    console.log(localStorage.getItem('cart'));
+    expect(cart[0].quantity).toEqual(2);
+    
   });
 
 
