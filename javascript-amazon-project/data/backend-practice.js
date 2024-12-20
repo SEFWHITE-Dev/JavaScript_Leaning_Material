@@ -18,7 +18,7 @@ xhr.addEventListener('load', () => {
 // a backend only supports a certain set of URL paths
 // when setting up a backend we need to determine which URL paths are supported, and how each URL path will respond
 // if we send a request to a URL path that is not supported, the backend will respond with an error
-xhr.open('GET', 'https://supersimplebackend.dev/products/first'); // returns JSON
+//xhr.open('GET', 'https://supersimplebackend.dev/products/first'); // returns JSON
 //xhr.open('GET', 'https://supersimplebackend.dev/documentation');  // returns raw HTML
 //xhr.open('GET', 'https://supersimplebackend.dev/not-supported'); // returns {"errorMessage":"Error: this URL path is not supported."}
 
@@ -54,3 +54,7 @@ xhr.send();
 // Request-Response Cycle
 // since it takes time for the request to be sent, and the response to be sent back, 
 //xhr.response(); // response() will be undefined
+
+// 1. send a request
+// 2. use a callback to wait for a response
+// 3. run the rest of the code, once you have a response

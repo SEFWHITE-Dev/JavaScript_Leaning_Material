@@ -46,6 +46,7 @@ const products =[
 import { cart, addToCart } from '../data/cart.js';
 import { products } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
+import { loadProducts } from '../data/products.js';
 
 /* another syntax for import: import * as...
  this imports everything from a file and groups it inside the declared object
@@ -60,93 +61,100 @@ cartModule.addToCart('id');
 // so if another JS files uses the same var name it will cause naming conflicts
 //const cart = []; 
 
+// loadProducts() will send a request to the backend, but it takes time for a response
+// returns empty 
+loadProducts(renderProductsGrid);
 
-let productsHTML = '';
+// Callback: a function to run in the future
+function renderProductsGrid() {
 
-products.forEach((product) => {
-  productsHTML += `
-  <div class="product-container">
-          <div class="product-image-container">
-            <img class="product-image"
-              src=${product.image}>
-          </div>
+  let productsHTML = '';
 
-          <div class="product-name limit-text-to-2-lines">
-            ${product.name}
-          </div>
-
-          <div class="product-rating-container">
-            <img class="product-rating-stars"
-              src="${product.getStarsUrl()}">
-            <div class="product-rating-count link-primary">
-              ${product.rating.count}
+  products.forEach((product) => {
+    productsHTML += `
+    <div class="product-container">
+            <div class="product-image-container">
+              <img class="product-image"
+                src=${product.image}>
             </div>
+
+            <div class="product-name limit-text-to-2-lines">
+              ${product.name}
+            </div>
+
+            <div class="product-rating-container">
+              <img class="product-rating-stars"
+                src="${product.getStarsUrl()}">
+              <div class="product-rating-count link-primary">
+                ${product.rating.count}
+              </div>
+            </div>
+
+            <div class="product-price">
+              ${product.getPrice()}
+            </div>
+
+            <div class="product-quantity-container">
+              <select>
+                <option selected value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+              </select>
+            </div>
+
+            <!-- Polymorphism: use a mthod without knowing the class type -->
+            ${product.extraInfoHTML()}
+
+            <div class="product-spacer"></div>
+
+            <div class="added-to-cart">
+              <img src="images/icons/checkmark.png">
+              Added
+            </div>
+
+            <button class="add-to-cart-button button-primary
+            js-add-to-cart-button"
+            data-product-id="${product.id}">
+              Add to Cart
+            </button>
           </div>
-
-          <div class="product-price">
-            ${product.getPrice()}
-          </div>
-
-          <div class="product-quantity-container">
-            <select>
-              <option selected value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
-              <option value="6">6</option>
-              <option value="7">7</option>
-              <option value="8">8</option>
-              <option value="9">9</option>
-              <option value="10">10</option>
-            </select>
-          </div>
-
-          <!-- Polymorphism: use a mthod without knowing the class type -->
-          ${product.extraInfoHTML()}
-
-          <div class="product-spacer"></div>
-
-          <div class="added-to-cart">
-            <img src="images/icons/checkmark.png">
-            Added
-          </div>
-
-          <button class="add-to-cart-button button-primary
-          js-add-to-cart-button"
-          data-product-id="${product.id}">
-            Add to Cart
-          </button>
-        </div>
-  `;
-});
-
-// a data attribute is just a HTML attribute. it allows you to attach any data to an element
-// they must start with 'data-'
-// then give it any name. e.g. data-product-name
-// the product's 'name' is attatched to the 'button' attribute it resides in
-// the kebab-case naming is automatically converted to camel-case when used in JS code
-
-//console.log(productsHTML);
-
-document.querySelector('.js-products-grid').innerHTML = productsHTML;
-
-function updateCartQuantity() {
-  let cartQuantity = 0;
-
-  cart.forEach((cartItem) => {
-    cartQuantity += cartItem.quantity;
+    `;
   });
 
-  document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+  // a data attribute is just a HTML attribute. it allows you to attach any data to an element
+  // they must start with 'data-'
+  // then give it any name. e.g. data-product-name
+  // the product's 'name' is attatched to the 'button' attribute it resides in
+  // the kebab-case naming is automatically converted to camel-case when used in JS code
+
+  //console.log(productsHTML);
+
+  document.querySelector('.js-products-grid').innerHTML = productsHTML;
+
+  function updateCartQuantity() {
+    let cartQuantity = 0;
+
+    cart.forEach((cartItem) => {
+      cartQuantity += cartItem.quantity;
+    });
+
+    document.querySelector('.js-cart-quantity').innerHTML = cartQuantity;
+  }
+
+  document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
+    button.addEventListener('click', () => {
+      // the dataset property gives us all of the 'data' attributes attatched to the element
+      const selectedProductId = button.dataset.productId; // product-name => productName the name is automatically converted
+
+      addToCart(selectedProductId);
+      updateCartQuantity();
+    });
+  });
 }
-
-document.querySelectorAll('.js-add-to-cart-button').forEach((button) => {
-  button.addEventListener('click', () => {
-    // the dataset property gives us all of the 'data' attributes attatched to the element
-    const selectedProductId = button.dataset.productId; // product-name => productName the name is automatically converted
-
-    addToCart(selectedProductId);
-    updateCartQuantity();
-  });
-});

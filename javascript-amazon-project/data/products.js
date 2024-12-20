@@ -142,6 +142,36 @@ object3.method2(); // points to object3
 object3.method3();
 */
 
+export let products = [];
+
+// param1: function to be run once loadProducts() has a response from the backend
+export function loadProducts(func) {
+  // create and send a request to the products backend
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    // convert JSON back into JS
+    // convert products into Class objects 
+    // .map() takes each object, save it into a parameter, and runs the function
+    // .map() loops through the array and for each value, runs a function
+    products = JSON.parse(xhr.response).map((productDetails) => { 
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails); // reutnrs it as a new array
+    }); 
+    console.log('products loaded');
+
+    // run the function taken in as param1
+    func();
+  });
+
+  xhr.open('GET', 'https://supersimplebackend.dev/products');
+  xhr.send();
+}
+
+
+/*
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
@@ -807,3 +837,5 @@ export const products = [
   }
   return new Product(productDetails); // reutnrs it as a new array
 }); // map() loops through the array and for each value, runs a function
+
+*/
