@@ -3,7 +3,7 @@
 class Cart {
 
   cartItems; // default is public
-  #localStorageKey; // private properties start with # for some fucking reason
+  #localStorageKey; // private properties start with # for some reason
 
   constructor(newLocalStorageKey) { // runs automatically when the object is instantiated
     this.#localStorageKey = newLocalStorageKey;    
