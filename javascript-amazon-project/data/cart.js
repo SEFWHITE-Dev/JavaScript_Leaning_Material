@@ -84,3 +84,20 @@ export function updateDeliveryOption(selectedProductId, deliveryOptionId) {
 
   saveToStorage();
 }
+
+
+// param1: function to be run once loadProducts() has a response from the backend
+export function loadCart(func) {
+  // create and send a request to the products backend
+  const xhr = new XMLHttpRequest();
+
+  xhr.addEventListener('load', () => {
+    console.log(xhr.response);
+    
+    // run the function taken in as param1
+    func();
+  });
+
+  xhr.open('GET', 'https://supersimplebackend.dev/cart');
+  xhr.send();
+}
