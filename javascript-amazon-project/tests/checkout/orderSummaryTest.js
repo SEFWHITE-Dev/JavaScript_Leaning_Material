@@ -1,6 +1,6 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { loadFromStorage, cart } from "../../data/cart.js";
-
+import { loadProducts } from "../../data/products.js";
 
 // Integration test: testing a whole page; many units/pieces of code working together
 // 1. how the page looks
@@ -15,6 +15,17 @@ describe('test suite: renderOrderSummary', () => {
   const productId2 = "15b6fc6f-327a-4ec4-896f-486349e85a3d";
 
   // Hooks: lets us run some code for each test
+  // param1: done() is a Jasmine function 
+  // the code will only go onto the next step when we call done()
+  // otherwise beforeAll will wait indefinately
+  // done() lets us control when to go on to the next step
+  beforeAll((done) => {
+    loadProducts(() => {
+      done();
+    });
+  });
+
+  
   // beforeEach() hook lets us run the code within it before each test
   beforeEach(() => {
     // Set up the required DOM structure for the test
