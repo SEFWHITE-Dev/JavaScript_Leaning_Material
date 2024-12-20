@@ -73,27 +73,74 @@ class Clothing extends Product {
 
 }
 
-const t_shirt = new Clothing({
-  id: "83d4ca15-0f35-48f5-b7a3-1ea210004f2e",
-  image: "images/products/adults-plain-cotton-tshirt-2-pack-teal.jpg",
-  name: "Adults Plain Cotton T-Shirt - 2 Pack",
-  rating: {
-    stars: 4.5,
-    count: 56
+/*
+const date = new Date();
+console.log(date);
+console.log(date.toLocaleTimeString());
+
+
+console.log(this); // returns undefined
+
+const newObject = {
+  a: 2,
+  b: this.a, // returns undefined as newObject has not been created yet, hence 'this' is undefiend
+};
+
+console.log(newObject);
+
+
+function logThis() {
+  console.log(this); // returns undefined, as we are not inside of any object, so there's nothing for 'this' to point to
+}
+
+logThis();
+// inside a function we can change 'this' to whatever we want
+// functions have the method '.call()'
+logThis.call('hello'); // set 'this' to be 'hello'
+
+
+
+
+// arrow functions do not change the value of 'this'
+// a usual function would point to the 'object3'
+this; // undefined
+const object3 = {
+  method: () => { 
+    // 'this' will have the same value as outside the arrow fcuntion
+    console.log(this); // 'this' keeps the value that it had outside the arrow function
   },
-  priceCents: 799,
-  keywords: [
-    "tshirts",
-    "apparel",
-    "mens"
-  ],
-  type: "clothing",
-  sizeChartLink: "images/clothing-size-chart.png"
-});
 
-console.log(t_shirt);
-console.log(t_shirt.getPrice());
+  method2() { // points to object3
+    console.log(this);
+  },
 
+  method3() {
+    // inside a forEach() loop, 'this' does not point to an object any more it points to undefined
+    // beacuse a new function was created within it (inside a refular function, 'this' becomes undefined)
+    // this caused problems since we no longer had access to the outer object
+    // hence why arrow functions were created
+    console.log(this); // points to object3
+
+    [1, 2, 3].forEach(function() {
+      console.log(this); // points to undefined
+    });
+
+
+
+    // arrow functions do not change the value of 'this'
+    console.log(this); // points to object3
+
+    [1, 2, 3].forEach(() => {
+      console.log(this); // points to object3
+    });
+  },
+};
+
+
+object3.method(); // returns undefined
+object3.method2(); // points to object3
+object3.method3();
+*/
 
 export const products = [
   {
