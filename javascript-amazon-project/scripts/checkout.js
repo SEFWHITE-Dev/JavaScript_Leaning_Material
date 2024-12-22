@@ -2,7 +2,7 @@ import { renderOrderSummary } from "./checkout/orderSummary.js";
 import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 //import '../data/cart-oop.js'; // this syntx just runs the code within the file without importing anything
 //import '../data/backend-practice.js'
-import { loadProducts } from "../data/products.js";
+import { loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 
 
@@ -10,11 +10,7 @@ import { loadCart } from "../data/cart.js";
 // Promise.all(): lets us run multiple promises at the same time, 
 // and wait for ALL of them to finish
 Promise.all([
-  new Promise((resolve) => {
-    loadProducts(() => {      
-      resolve(); 
-    });
-  }),
+  loadProductsFetch(),
   new  Promise((resolve) => {
     loadCart(() => {      
       resolve('value1'); 

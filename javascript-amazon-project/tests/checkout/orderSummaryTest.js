@@ -1,6 +1,6 @@
 import { renderOrderSummary } from "../../scripts/checkout/orderSummary.js";
 import { loadFromStorage, cart } from "../../data/cart.js";
-import { loadProducts } from "../../data/products.js";
+import { loadProductsFetch } from "../../data/products.js";
 
 // Integration test: testing a whole page; many units/pieces of code working together
 // 1. how the page looks
@@ -20,7 +20,7 @@ describe('test suite: renderOrderSummary', () => {
   // otherwise beforeAll will wait indefinately
   // done() lets us control when to go on to the next step
   beforeAll((done) => {
-    loadProducts(() => {
+    loadProductsFetch().then(() => {
       done();
     });
   });

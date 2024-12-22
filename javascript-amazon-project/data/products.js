@@ -144,6 +144,41 @@ object3.method3();
 
 export let products = [];
 
+// use a Promise to make a HTTP request
+export function loadProductsFetch() {
+  // makes a HTTP GET request. when we call fectch, it will create a promise
+  // fetch() will make a request to the backend, when we get a response, it will go onto the next step
+  const promise = fetch(
+    'https://supersimplebackend.dev/products'
+  ).then((response) => {
+  //  console.log(response);
+    // response.json() is asynchronous, it returns a promise
+    // when we return a promise, it will wait for this promise to finish before going to the next step.
+    return response.json();
+
+  }).then((productsData) => {
+  //  console.log(productsData);
+    products = productsData.map((productDetails) => { 
+      if (productDetails.type === 'clothing') {
+        return new Clothing(productDetails);
+      }
+      return new Product(productDetails); // reutnrs it as a new array
+    }); 
+    console.log('products loaded');
+
+  });
+
+  return promise;
+}
+
+
+// it is possible to return a promise out of a function, and keep adding steps to that promise
+// loadProductsFetch().then(() => {
+//   console.log('next step');
+// });
+
+
+// use callbacks to make a HTTP request
 // param1: function to be run once loadProducts() has a response from the backend
 export function loadProducts(func) {
   // create and send a request to the products backend
