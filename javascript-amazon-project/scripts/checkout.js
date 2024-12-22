@@ -8,18 +8,36 @@ import { loadCart } from "../data/cart.js";
 // async makes a function return a promise
 // async lets us use 'await', which is cleaner than .then()
 // async await can only be used for promises, it doesn't do anything for a callback
+// try/catch also works with synchronous code
+// whenever there is an error in the 'try' it will skip the rest of the code
+// try/catch is meant to be used to handle unexpected errors (something outside our control caused the error)
+
 async function loadPage() {
-  console.log('load page');
 
-  // instead of using .then(), use await
-  await loadProductsFetch();
+  // Error handling for async 
+  try {
 
-  // save the value returned by resolve as a 'value'
-  const value = await new Promise((resolve) => {
-    loadCart(() => {      
-      resolve('value3'); 
+    //manually create a new error using 'throw'
+    //throw 'error1';
+
+    console.log('load page');
+
+    // instead of using .then(), use await
+    await loadProductsFetch();
+  
+    // param1: save the value returned by resolve as a 'value'
+    // param2: since you can't use 'throw' in promises, use param2 which is a function to be executed when an error occurs
+    const value = await new Promise((resolve, reject) => {
+      loadCart(() => {      
+      //  reject('error3');
+        resolve('value3'); 
+      });
     });
-  });
+  } 
+  catch (error) { // if there's an error inside the 'try' it's going to run the 'catch'
+    console.log('Unexpected async error. Try again later');
+  }
+  
 
   renderOrderSummary();
   renderPaymentSummary();

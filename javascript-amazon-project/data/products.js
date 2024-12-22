@@ -166,6 +166,8 @@ export function loadProductsFetch() {
     }); 
     console.log('products loaded');
 
+  }).catch((error) => { // Error handling for promsies use the catch() method
+    console.log('Unexpected error. Try again later');
   });
 
   return promise;
@@ -201,9 +203,15 @@ export function loadProducts(func) {
     func();
   });
 
+  // Error handling during a request
+  xhr.addEventListener('error', (error) => { // a 'error' value is returned containing details about the error that occurred
+    console.log('Unexpected error. Try again later')
+  });
+
   xhr.open('GET', 'https://supersimplebackend.dev/products');
   xhr.send();
 }
+
 
 
 /*
