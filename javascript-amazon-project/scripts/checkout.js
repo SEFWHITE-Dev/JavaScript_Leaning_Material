@@ -5,8 +5,48 @@ import { renderPaymentSummary } from "./checkout/paymentSummary.js";
 import { loadProductsFetch } from "../data/products.js";
 import { loadCart } from "../data/cart.js";
 
+// async makes a function return a promise
+// async lets us use 'await', which is cleaner than .then()
+// async await can only be used for promises, it doesn't do anything for a callback
+async function loadPage() {
+  console.log('load page');
+
+  // instead of using .then(), use await
+  await loadProductsFetch();
+
+  // save the value returned by resolve as a 'value'
+  const value = await new Promise((resolve) => {
+    loadCart(() => {      
+      resolve('value3'); 
+    });
+  });
+
+  renderOrderSummary();
+  renderPaymentSummary();
+
+  //return 'value2';
+}
 
 
+loadPage();
+
+/*
+loadPage().then((value) => {
+  console.log('next step');
+  console.log(value); // shows 'value2'
+});
+
+
+// async function is the same as writing the following:
+function loadPage() {
+  return new Promise(() => {
+    console.log('load page');
+    resolve('value2);
+  });
+}
+*/
+
+/*
 // Promise.all(): lets us run multiple promises at the same time, 
 // and wait for ALL of them to finish
 Promise.all([
@@ -22,7 +62,7 @@ Promise.all([
   renderOrderSummary();
   renderPaymentSummary();
 });
-
+*/
 
 
 /*
