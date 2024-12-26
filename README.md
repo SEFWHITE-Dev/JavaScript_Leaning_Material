@@ -103,6 +103,16 @@ VS Code、LiveServerを使用してリアルタイムでサイトの表示内容
 ・アロー関数とthis</br>
 
 <h4>バックエンド、コールバック、async/await</h4>
+・演習ファイルを基にするAPIにGET リクエストを送る</br>
+・リクエスト・レスポンスサイクルを実行</br>
+・バックエンドで保存されている「商品」データをリクエスト</br>
+・Jasmineの商品テスト項目をバックエンドを使用するように更新</br>
+・Promiseとresolve()の基本動作
+・PromiseからAsync awaitに変更
+・async function にtry/catchを使用してエラーをキャッチ
+・バックエンド使用して「注文」機能を実装
+・URLを使ってのパラメータを操作
+
 
 </br>
 
